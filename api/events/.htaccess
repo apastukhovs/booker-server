@@ -1,0 +1,12 @@
+<Limit GET POST PUT DELETE>
+    Allow from all
+</Limit>
+# Header set Access-Control-Allow-Origin "*"
+
+RewriteEngine On
+RewriteBase /~user4/booker/booker-server/server/api/events/
+# RewriteBase /my/courses/booker/booker-server/server/api/events/
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php
