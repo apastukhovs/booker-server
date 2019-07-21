@@ -1,11 +1,12 @@
 <?
-include_once '../libs/Server.php';
-include_once '../libs/SQL.php';
-include_once '../libs/MySql.php';
-include_once '../config.php';
-include_once '../models/UsersModel.php';
+$dirPath = dirname(__FILE__);
+include_once $dirPath . '/../../config.php';
+include_once $dirPath . '/../Server.php';
+include_once $dirPath . '/../SQL.php';
+include_once $dirPath . '/../MySql.php';
+include_once $dirPath . '/../models/UsersModel.php';
 
-class Users
+class UsersController
 {
     private $model;
     public function __construct()

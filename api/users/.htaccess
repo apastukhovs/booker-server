@@ -1,12 +1,24 @@
 <Limit GET POST PUT DELETE>
     Allow from all
 </Limit>
-# Header set Access-Control-Allow-Origin "*"
 
 RewriteEngine On
-RewriteBase /~user4/booker/booker-server/server/api/users/
-# RewriteBase /my/courses/booker/booker-server/server/api/users/
-
+# Options FollowSymLinks
+# RewriteBase /booker-server/api/users/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php
+
+
+# <IfModule mod_rewrite.c>
+#     RewriteEngine On
+#     # RewriteBase /booker-server/api/users/
+#     # If the requested filename exists, simply serve it.
+#     # We only want to let Apache serve files and not directories.
+#     RewriteCond %{REQUEST_FILENAME} -f
+#     RewriteCond %{REQUEST_FILENAME} -d
+#     RewriteRule .? - [L]
+
+#     # Rewrite all other queries to the controller.
+#     RewriteRule .? index.php [L]
+# </IfModule>

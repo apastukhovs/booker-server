@@ -1,7 +1,12 @@
 <?
-include_once '../../libs/models/EventsController.php';
-include_once '../../libs/Server.php';
-include_once '../../config.php';
+$dirPath = dirname(__FILE__);
+
+include_once $dirPath . '/../../libs/controllers/EventsController.php';
+include_once $dirPath . '/../../libs/SQL.php';
+include_once $dirPath . '/../../libs/MySql.php';
+include_once $dirPath . '/../../libs/Server.php';
+include_once $dirPath . '/../../config.php';
+
 
 $events = new EventsController();
-$server = new RestServer($events);
+$server = new Server($events);

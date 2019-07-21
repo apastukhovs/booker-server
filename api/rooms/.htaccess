@@ -4,8 +4,8 @@
 # Header set Access-Control-Allow-Origin "*"
 
 RewriteEngine On
-RewriteBase /~user4/booker/booker-server/server/api/rooms/
-# RewriteBase /my/courses/booker/booker-server/server/api/rooms/
+RewriteBase /mysite.local/booker-server/server/api/rooms/
+# RewriteBase /mysite.local/booker-server/server/api/rooms/
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

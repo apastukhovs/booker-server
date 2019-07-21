@@ -1,7 +1,11 @@
 <?
-include_once '../../libs/models/UsersController.php';
-include_once '../../libs/Server.php';
-include_once '../../config.php';
+$dirPath = dirname(__FILE__);
+
+include_once $dirPath . '/../../libs/Server.php';
+include_once $dirPath . '/../../libs/SQL.php';
+include_once $dirPath . '/../../libs/MySql.php';
+include_once $dirPath . '/../../config.php';
+include_once $dirPath . '/../../libs/controllers/UsersController.php';
 
 $users = new UsersController();
-$server = new RestServer($users);
+$server = new Server($users);

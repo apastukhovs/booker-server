@@ -55,3 +55,5 @@ INSERT INTO booker_events (id, is_recurring, idrec, description, start_time, end
 (0, true, 4, 'Fourth event','2019-10-11 11:30:00', '2019-10-11 13:30:00', 1, 3),
 (0, true, 4, 'Fifth event','2019-08-21 12:00:00', '2019-08-21 13:00:00', 1, 3),
 (0, false, 5, 'Sixth event','2019-07-23 19:00:00', '2019-07-23 20:00:00', 2, 2);
+(0, false, 6, 'Sixth event','2019-07-22 19:00:00', '2019-07-23 20:00:00', 2, 2);
+(0, false, 6, 'Sixth event','2019-07-24 19:00:00', '2019-07-23 20:00:00', 2, 2);

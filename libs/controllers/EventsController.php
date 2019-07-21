@@ -1,9 +1,12 @@
 <?
-include_once '../libs/Server.php';
-include_once '../libs/SQL.php';
-include_once '../libs/MySql.php';
-include_once '../config.php';
-include_once '../models/EventsModel.php';
+
+$dirPath = dirname(__FILE__);
+
+include_once $dirPath . '/../../config.php';
+include_once $dirPath . '/../Server.php';
+include_once $dirPath . '/../SQL.php';
+include_once $dirPath . '/../MySql.php';
+include_once $dirPath . '/../models/EventsModel.php';
 
 class EventsController 
 {
@@ -14,9 +17,9 @@ class EventsController
         $this->model = new EventsModel();
     }
 
-    public function getEvents($functionParams, $queryParams)
+    public function allEvents($functionParams, $queryParams)
     {
-        $result = $this->model->getEvents($functionParams, $queryParams);
+        $result = $this->model->allEvents($functionParams, $queryParams);
         return $result;
     }
     

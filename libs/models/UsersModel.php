@@ -1,13 +1,19 @@
 <?php
 
+$dirPath = dirname(__FILE__);
+
+include_once $dirPath . '/../../config.php';
+include_once $dirPath . '/../SQL.php';
+include_once $dirPath . '/../MySql.php';
+
 class UsersModel
 {
 
-    public function getUsers($functionParams, $queryParams)
+    public function getUsers($funcParams, $queryParams)
     {
         try
         {
-            $mysql = new MySQL();
+            $mysql = new MySql();
             $mysql->setSql("SELECT id, username, password, email, fullname, is_admin, is_active FROM booker_users");
             $result = $mysql->select();
         }catch(Exception $e)
@@ -17,7 +23,7 @@ class UsersModel
         return $result->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function insertUser($functionParams, $post)
+    public function insertUser($funcParams, $post)
     {
         $id = 0;
         $this->validateEmpty($post,['fullname', 'email', 'username', 'password']);
@@ -34,7 +40,7 @@ class UsersModel
         }
         try
         {
-            $mysql = new MySQL();
+            $mysql = new MySql();
             $mysql->setSql("INSERT INTO booker_users(id, fullname, email, username, password, is_admin, is_active)"
                 ." VALUE(?, ?, ?, ?, ?, ?, ?)");
             $result = $mysql->insert([0, $fullname, $email, $username, $password, $is_admin, $is_active]);
@@ -68,7 +74,7 @@ class UsersModel
         }
     }
 
-    public function updateUser($functionParams, $post)
+    public function updateUser($funcParams, $post)
     {
         $id = $post['id'];
         $fullname = $post['fullname'];
@@ -79,7 +85,7 @@ class UsersModel
         $is_active = '1';
         try
         {
-            $mysql = new MySQL();
+            $mysql = new MySql();
             $mysql->setSql("UPDATE booker_users SET fullname=?, email=?, username=?, password=?, is_admin=?"
                 ." WHERE id=?");
             $result = $mysql->update([$fullname, $email, $username, $password, $is_admin, $id]);
@@ -91,12 +97,12 @@ class UsersModel
         }
     }
 
-    public function deleteUser($functionParams, $post)
+    public function deleteUser($funcParams, $post)
     {
         $id = $post['id'];
         try
         {
-            $mysql = new MySQL();
+            $mysql = new MySql();
             $mysql->setSql("UPDATE booker_users SET is_active=0"
                 ." WHERE id=?");
             $result = $mysql->update([$id]);
@@ -114,7 +120,7 @@ class UsersModel
         $password = $post['password'];
         try 
         {
-        $mysql = new MySQL();
+        $mysql = new MySql();
         $mysql->setSql("SELECT id, username, password, email, fullname, is_admin, is_active FROM booker_users"
         ." WHERE username='$username' AND password='$password'");
         $result = $mysql->select();

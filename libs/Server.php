@@ -1,66 +1,68 @@
-<?
+<?php
 class Server
 {
-    private $service;
-    public function __construct($service)
+    public function __construct($className)
     {
         try
         {
-            $this->chooseMethod($service);
+            $this->parseMethod($className);
         }
         catch (Exception $e)
         {
             echo json_encode(['errors' => $e->getMessage()]);
-        } 
+        }
     }
-
-    private function chooseMethod($service)
+    private function parseMethod($className)
     {
-        $this->service = $service;
+        $this->className = $className;
+        //var_dump($className);
         $url = $_SERVER['REQUEST_URI'];
-        list($b, $c, $s, $a, $d, $e, $db, $func, $param) = explode('/', $url, 8);
+        list($b, $a, $db, $className, $funcName, $path) = explode('/', $url, 7);
+        //var_dump($b, $a, $db, $className, $funcName, $path);
+        $params = explode('/', $url, 2);
+        //var_dump($params);
         $method = $_SERVER['REQUEST_METHOD'];
-        $functionName = ucfirst($func);
-        $functionParams = explode('/', $param);
-        $res = '';
-
-        switch ($method)
-        {
+        $funcParams = explode('/', $path);
+        //var_dump($funcParams);
+        $result = '';
+		header('Access-Control-Allow-Origin: *');
+		header('Access-Control-Allow-Headers: *');
+		header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS, PUT');
+        header('Content-Type: application/json');
+        //var_dump($method);
+        switch ($method) {
             case 'GET':
-                $result = $this->setMethod('get' . $functionName, $functionParams, $_GET);
-                break;
+                $result = $this->setMethod('get' . $funcName, $funcParams);
+                 break;
             case 'POST':
-                $contents = file_get_contents('php://input');
-                $queryParams = json_decode($contents, true);
-                $result = $this->setMethod('post' . $functionName, $functionParams, $queryParams);
+                $result = $this->setMethod('post' . $funcName, $funcParams);
                 break;
             case 'PUT':
-                $queryParams = json_decode(file_get_contents('php://input'), true);
-                $result = $this->setMethod('put' . $functionName, $functionParams, $queryParams);
+            $result = $this->setMethod('put' . $funcName, $funcParams);
                 break;
             case 'DELETE':
-                $queryParams = json_decode(file_get_contents('php://input'), true);
-                $result = $this->setMethod('delete' . $functionName, $functionParams, $queryParams);
+            $result = $this->setMethod('delete' . $funcName, $funcParams);
                 break;
             default:
                 return false;
         }
-        $this->get_result($res); 
+		
+        return $this->show_results($result);
     }
-
-    private function setMethod($functionName, $functionParams = false, $queryParams = false)
+    public function setMethod($funcName, $param = false)
     {
-        $result = false;
-        if (method_exists($this->service, $funcName))
+        var_dump($funcName);
+        if (method_exists($this->className, $funcName))
         {
-            $result = call_user_func([$this->service, $functionName], $functionParams, $queryParams);
-        }
-        return $result;
+            return call_user_func([$this->className, $funcName], $param);
+        } else {
+			return "No such method: " . $funcName;
+		}
     }
-
-    private function get_result($res)
-    {
-        header('Content-Type: application/json');
-        echo json_encode($res);
+	public function show_results($result)
+	{
+        echo json_encode($result);
+               
     }
+    
 }
